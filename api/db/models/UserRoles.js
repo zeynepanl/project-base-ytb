@@ -1,25 +1,21 @@
-const { default: mongoose } = require("mongoose");
-const mogoose = require("mongoose");
+const mongoose = require("mongoose");
+const Roles = require("./Roles");
+const Users = require("./Users");
 
-const schema = new mogoose.Schema(
-  {
-    role_id: { type: mongoose.Schema.Types.ObjectId, required: true },
-    permission: { type: String, required: true },
-    created_by: {
-      type: mogoose.Schema.Types.ObjectId,
-      required: true,
-    },
-  },
-  {
+const schema = mongoose.Schema({
+    role_id: { type: mongoose.SchemaTypes.ObjectId, required: true, ref: Roles },
+    user_id: { type: mongoose.SchemaTypes.ObjectId, required: true, ref: Users }
+}, {
     versionKey: false,
     timestamps: {
-      createdAt: "created_at",
-      updatedAt: "updated_at",
-    },
-  }
-);
+        createdAt: "created_at",
+        updatedAt: "updated_at"
+    }
+});
 
-class UserRoles extends mongoose.Model {}
+class UserRoles extends mongoose.Model {
 
-SchemaType.loadclass(UserRoles);
-model.exports = mongoose.model("user_roles", schema);
+}
+
+schema.loadClass(UserRoles);
+module.exports = mongoose.model("user_roles", schema);

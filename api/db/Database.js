@@ -1,22 +1,32 @@
 const mongoose = require("mongoose");
 
 let instance = null;
-
 class Database {
-  constructor() {
-    if (!instance) {
-      this.mongoConnection = null;
-      instance = this;
+
+    constructor() {
+        if (!instance) {
+            this.mongoConnection = null;
+            instance = this;
+        }
+
+        return instance;
     }
-    return instance;
-  }
 
-  async connect(options) {
-    let db = await mongoose.connect(options.CONNECTION_STRING);
+    async connect(options) {
+        try {
+            console.log("DB Connecting...");
+            let db = await mongoose.connect(options.CONNECTION_STRING);
 
-    this.mongoConnection = db;
-    console.log("Db connected");
-  }
+
+            this.mongoConnection = db;
+            console.log("DB Connected.");
+        } catch (err) {
+            console.error(err);
+            process.exit(1);
+        }
+
+    }
+
 }
 
 module.exports = Database;
